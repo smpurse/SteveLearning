@@ -1,8 +1,8 @@
 #!/usr/bin/python
-# s.pursell use terminal command python3 hmc5883Ltest.py > outputfilename.dat to send output to a file
-# modified to try to make the QMC5883 work.  different registers.
+# s.pursell use terminal command in python3 v2-QMC5883test.py > outputfilename.dat to send output to a file
+# s.pursell modified HMC code to make the QMC5883 work.  it's different registers.
 
-# !! NOT FOR HMC5883L !!
+# !! THIS WILL NOT WORK FOR HMC5883L the registers are different due to a differnet chip on board!!
 
 import smbus
 import time
@@ -11,13 +11,13 @@ import math
 bus = smbus.SMBus(1)
 
 #address = 0x1e
-address = 0x0d #QMC5883 has non standard address
+address = 0x0d #QMC5883 has this non standard address
 
 def read_byte(adr):
     return bus.read_byte_data(address, adr)
     
 def read_word(adr):
-    # NOTE  QMC5883 has LSB and MSB in reverse order. 
+    # NOTE  QMC5883 has LSB and MSB in reverse order so this code is altered. 
     low = bus.read_byte_data(address, adr)
     high = bus.read_byte_data(address, adr+1)
     val = (high << 8) + low
